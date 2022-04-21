@@ -1,8 +1,7 @@
-using TensorOperations
 using Random
+using TensorOperations
 
-import Base: eltype
-import Random: rand
+import Base: eltype, rand
 import LinearAlgebra: norm
 
 struct SpacedMPO{T}
@@ -26,9 +25,9 @@ MPOSampler(::Type{T}, n, p, χ, s=1) where {T} = MPOSampler{T}(n, p, χ, s)
 """
     SpacedMPO(n::Integer, p::Integer, χ::Integer[, s::Integer])
 
-Returns a `Random.Sampler` for a randomly sampling `SpacedMPO`s of the given parameters.
+Return a `Random.Sampler` for a randomly sampling `SpacedMPO`s of the given parameters.
 """
-SpacedMPO(n::Integer, p::Integer, χ::Integer, s::Integer=1) = MPOSampler{Float64}(n, p, χ, s)
+SpacedMPO(n::Integer, p::Integer, χ::Integer, s::Integer=1) = SpacedMPO(Float64, n, p, χ, s)
 SpacedMPO(::Type{T}, n::Integer, p::Integer, χ::Integer, s::Integer=1) where {T} = MPOSampler{T}(n, p, χ, s)
 
 """
