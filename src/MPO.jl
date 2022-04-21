@@ -4,15 +4,11 @@ import Base: zeros
 import Random: rand
 import LinearAlgebra: norm
 
-struct MPO{T<:Real}
-    t::Vector{Array{T}} # in(up)-out(down)-left-right
-    χ::UInt
+struct SpacedMPO{T}
+    tensors::Vector{Array{T}} # in(up)-out(down)-left-right
 end
 
-function zeros(...)
-    throw()
-end
-
+SpacedMPO(tensors::Vector{Array{T,N}}) where {T,N} = SpacedMPO{T}(tensors)
 
 function norm(A::MPO, p::Real=2)
     for t in A.t
