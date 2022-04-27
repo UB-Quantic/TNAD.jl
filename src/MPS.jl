@@ -5,6 +5,11 @@ import Base: eltype, rand, *
 
 struct MPS{T}
     tensors::Vector{Array{T}} # out(down)-left-right
+
+    function MPS(tensors::Vector{Array{T}}) where {T}
+        @assert all(size(first(tensors), 1) .== size.(tensors, 1))
+        new{T}(map(x -> reshape(x, size(x)..., Iterators.repeated(1, 3 - ndims(x))...), tensors))
+    end
 end
 
 MPS(tensors::Vector{Array{T,N}}) where {T,N} = MPS{T}(tensors)
