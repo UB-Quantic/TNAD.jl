@@ -51,8 +51,14 @@ function rand(rng::AbstractRNG, sampler::Random.SamplerTrivial{MPOSampler{T}}) w
         # tensors in the left transient
         [rand(rng, T, p, p, p^(2 * (i - 1)), p^(2 * i)) for i ∈ 1:t-1]
 
+        # start of stationary region
+        [rand(rng, T, p, p, p^(2 * (t - 1)), χ)]
+
         # tensors in the stationary region
-        [rand(rng, T, p, p, χ, χ) for _ ∈ t:n-t+1]
+        [rand(rng, T, p, p, χ, χ) for _ ∈ t+1:n-t]
+
+        # end of stationary region
+        [rand(rng, T, p, p, χ, p^(2 * (t - 1)))]
 
         # tensors in the right transient
         [rand(rng, T, p, p, p^(2 * i), p^(2 * (i - 1))) for i ∈ t-1:-1:1]
