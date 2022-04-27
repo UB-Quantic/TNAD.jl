@@ -11,6 +11,8 @@ end
 SpacedMPO(tensors::Vector{Array{T,N}}) where {T,N} = SpacedMPO{T}(tensors)
 
 eltype(::SpacedMPO{T}) where {T} = T
+length(m::SpacedMPO) = length(m.tensors)
+physical_dim(m::SpacedMPO) = size(first(m.tensors), 1)
 
 struct MPOSampler{T}
     n

@@ -16,8 +16,7 @@ end
 MPS(tensors::Vector{Array{T,N}}) where {T,N} = MPS{T}(tensors)
 
 eltype(::MPS{T}) where {T} = T
-
-length(m::MPS) = len(m.tensors)
+length(m::MPS) = length(m.tensors)
 physical_dim(m::MPS) = size(first(m.tensors), 1)
 
 struct MPSSampler{T}
