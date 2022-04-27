@@ -68,9 +68,24 @@ function rand(rng::AbstractRNG, sampler::Random.SamplerTrivial{MPOSampler{T}}) w
 end
 
 
-function norm(A::MPO, p::Real=2)
-    for t in A.t
-        @tensor C[u, d, l, r] := A[] * A[]
+function norm(X::SpacedMPO, p::Real=2)
+    if p != 2
+        error("norm(; p=$p) not implemented")
     end
-    ...
+
+    A = []
+    for T ∈ X.tensors
+        Th = conj(T)
+        @tensor U[left1, left2, right1, right2] := T[up, down, left1, right1] * Th[up, down, left2, right2]
+        push!(A, U)
+    end
+
+    B = popfirst!(A)
+    for T ∈ A
+        @tensor U[left1, left2, right1, right2] := B[left1, left2, shared1, shared2] * T[shared1, shared2, right1, right2]
+        B = U
+        # B = B * T
+    end
+
+    only(B)
 end
