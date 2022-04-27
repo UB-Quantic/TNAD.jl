@@ -1,7 +1,7 @@
 using Random
 using TensorOperations
 
-import Base: eltype, rand, *
+import Base: eltype, rand, length, *
 
 struct MPS{T}
     tensors::Vector{Array{T}} # out(down)-left-right
