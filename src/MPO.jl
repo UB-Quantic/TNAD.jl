@@ -68,6 +68,11 @@ function rand(rng::AbstractRNG, sampler::Random.SamplerTrivial{MPOSampler{T}}) w
 end
 
 
+"""
+    norm(X::SpacedMPO, p::Real=2)
+
+Calculates the 2-norm of `X` by computing `tr(X * adjoint(X))`.
+"""
 function norm(X::SpacedMPO, p::Real=2)
     if p != 2
         error("norm(; p=$p) not implemented")
