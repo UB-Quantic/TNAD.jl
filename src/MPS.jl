@@ -2,6 +2,7 @@ using Random
 using TensorOperations
 
 import Base: eltype, rand, length, *
+import LinearAlgebra: norm
 
 struct MPS{T}
     tensors::Vector{Array{T}} # out(down)-left-right
@@ -80,4 +81,13 @@ function *(ψa::MPS, ψb::MPS)
     end
 
     dropdims(tmp; dims=tuple(findall(size(tmp) .== 1)...))
+end
+
+function norm(a::MPS, p::Real=2)
+    if p != 2
+        error("norm(; p=$p) not implemented")
+    end
+
+    b = MPS(conj(a.tensors))
+    a * b
 end
