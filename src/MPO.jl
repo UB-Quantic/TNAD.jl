@@ -84,7 +84,6 @@ function norm(X::SpacedMPO, p::Real=2)
     for T ∈ A
         @tensor U[left1, left2, right1, right2] := B[left1, left2, shared1, shared2] * T[shared1, shared2, right1, right2]
         B = U
-        # B = B * T
     end
 
     only(B)
